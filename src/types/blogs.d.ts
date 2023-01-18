@@ -1,10 +1,12 @@
-import { Document } from "mongoose";
+import { Document, Schema } from "mongoose";
 
-interface BlogSchemaType extends Document {
-  category: {
-    type: String;
-    required: true;
-  };
+interface CategoryType extends Document {
+  category: [
+    {
+      type: SchemaTypes.ObjectId;
+      ref: "Category";
+    }
+  ];
   createdBy: {
     type: String;
     required: true;
@@ -24,4 +26,4 @@ interface BlogSchemaType extends Document {
   };
 }
 
-export = BlogSchemaType;
+export = CategoryType;

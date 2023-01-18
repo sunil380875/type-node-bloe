@@ -1,24 +1,25 @@
 import { Request, Response, NextFunction, Errback } from "express";
 import { Query, QuerySelector } from "mongoose";
-import Blog from "./../model/blodModel";
+import Blog from "../model/blogModel";
 import sendStatus from "./../utils/responce";
+import multer from "multer";
 export const getAllBlog = async (req: Request, res: Response) => {
   try {
     ////filter
-    const queryObj = { ...req.query };
-    const excludeField = ["limit"];
-    excludeField.forEach((el) => delete queryObj[el]);
-    let query = Blog.find(queryObj);
+    // const queryObj = { ...req.query };
+    // const excludeField = ["limit"];
+    // excludeField.forEach((el) => delete queryObj[el]);
+    // let query = Blog.find(queryObj);
 
-    //pagination
-    let page: number;
-    let limit: number;
-    page = Number(req.query.page) || 1;
-    limit = Number(req.query.limit) || 100;
+    // //pagination
+    // let page: number;
+    // let limit: number;
+    // page = Number(req.query.page) || 1;
+    // limit = Number(req.query.limit) || 100;
 
-    const skips = (page - 1) * limit;
-    query = query.skip(skips).limit(limit);
-    const blog = await query;
+    // const skips = (page - 1) * limit;
+    // query = query.skip(skips).limit(limit);
+    const blog = await Blog.find().populate("category");
 
     sendStatus(res, 200, blog);
   } catch (error: any) {
@@ -42,7 +43,12 @@ export const postBlog = async (
   next: NextFunction
 ) => {
   try {
-    const blog = await Blog.create(req.body);
+    const text = { ...req.file };
+    const photo = text.filename;
+    const file = { ...req.body, photo };
+    // console.log(file);
+    const blog = await Blog.create(file);
+    //console.log(blog);
     sendStatus(res, 201, blog);
   } catch (err: any) {
     console.log(err.message);
@@ -64,6 +70,18 @@ export const updateBlogs = async (req: Request, res: Response) => {
     const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidator: true,
+    });
+
+    sendStatus(res, 200, blog);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateBlogPhoto = async (req: Request, res: Response) => {
+  try {
+    const blog = await Blog.findByIdAndUpdate(req.params.id, req.file, {
+      new: true,
     });
 
     sendStatus(res, 200, blog);
