@@ -4,6 +4,8 @@ import recentPost from "./routes/recentPostRoute";
 import recentComment from "./routes/commentsRoute";
 import newsletter from "./routes/subscribeNewsRoute";
 import categoryName from "./routes/categoryRoute";
+import searchRoute from "./routes/searchApiRoute";
+
 const app: Application = express();
 app.use(express.json());
 
@@ -17,4 +19,7 @@ app.use("/api/v1/comment", recentComment);
 app.use("/api/v1/newsletter", newsletter);
 
 app.use("/api/v1/categoryname", categoryName);
+
+app.use("/api/v1", searchRoute);
+
 export = app;

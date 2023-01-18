@@ -5,12 +5,17 @@ import subscribeNewsLetter from "./../types/subscribenewsletter";
 const newsLetterSchema = new Schema<
   subscribeNewsLetter,
   Model<subscribeNewsLetter>
->({
-  email: {
-    type: String,
-    validate: validators.isEmail,
+>(
+  {
+    email: {
+      type: String,
+      validate: validators.isEmail,
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 export const NewsLetterSubscribe = model(
   "NewsLetterSubscribe",

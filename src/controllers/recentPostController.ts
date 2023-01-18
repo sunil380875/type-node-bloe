@@ -1,6 +1,6 @@
-import { RecentPost } from "../../model/recent_Posts_Model/recentPostsModel";
+import { RecentPost } from "../model/recentPostsModel";
 import { Request, Response } from "express";
-import sendStatus from "../../utils/responce";
+import sendStatus from "../utils/responce";
 
 export const recentPostContent = async (req: Request, res: Response) => {
   try {

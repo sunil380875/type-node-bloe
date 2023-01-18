@@ -4,7 +4,7 @@ import {
   getRecentPost,
   editPost,
   deletePost,
-} from "../controllers/recent_posts/recentPostController";
+} from "../controllers/recentPostController";
 const router = express.Router();
 
 router

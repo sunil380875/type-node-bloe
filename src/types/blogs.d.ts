@@ -24,6 +24,7 @@ interface CategoryType extends Document {
   photo: {
     type: String;
   };
+  Description: String;
 }
 
 export = CategoryType;

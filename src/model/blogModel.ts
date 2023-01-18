@@ -15,10 +15,6 @@ const blogSchema = new Schema(
       required: true,
       default: "Admin",
     },
-    ceatedAt: {
-      type: Date,
-      default: Date.now(),
-    },
     shortDescription: {
       type: String,
     },
@@ -28,6 +24,7 @@ const blogSchema = new Schema(
     photo: {
       type: String,
     },
+    Description: String,
   },
   {
     timestamps: true,
