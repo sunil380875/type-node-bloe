@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { BlogSchema } from "../model";
 
 import sendStatus from "../utils/response";
-
+import MediaStoreService from "../utils/storage-services";
 export const getAllBlog = async (
   req: Request,
   res: Response,
@@ -10,6 +10,7 @@ export const getAllBlog = async (
 ) => {
   try {
     let query = BlogSchema.find().populate("category");
+
     //pagination
     let page: number;
     let limit: number;
@@ -45,27 +46,17 @@ export const postBlog = async (
   next: NextFunction
 ) => {
   try {
-    const text = { ...req.file };
-    const photo = text.filename;
-    const file = { ...req.body, photo };
+    const avatarRawData = req?.files?.photo
+      ? ((await new MediaStoreService().upload({
+          file: req?.files?.photo,
+          dir: "User",
+        })) as {
+          key: string;
+          Location: string;
+        })
+      : undefined;
 
-    const blog = await BlogSchema.create(file);
-
-    sendStatus(res, blog, "Successfully create a blog");
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const deleteBlog = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    await BlogSchema.findByIdAndDelete(req.params.id);
-
-    sendStatus(res, " ", "Successfully delete a blog");
+    sendStatus(res, "", "Successfully create a blog");
   } catch (err) {
     next(err);
   }
@@ -82,6 +73,20 @@ export const updateBlogs = async (
     });
 
     sendStatus(res, blog, "Successfully update a blog");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteBlog = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await BlogSchema.findByIdAndDelete(req.params.id);
+
+    sendStatus(res, " ", "Successfully delete a blog");
   } catch (err) {
     next(err);
   }

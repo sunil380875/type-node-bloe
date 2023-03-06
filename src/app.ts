@@ -5,10 +5,16 @@ import recentComment from "./routes/commentsRoute";
 import newsletter from "./routes/subscribeNewsRoute";
 import categoryName from "./routes/categoryRoute";
 import searchRoute from "./routes/searchApiRoute";
+import fileUpload from "express-fileupload";
 
 const app: Application = express();
 app.use(express.json());
-
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./tmp/",
+  })
+);
 //routes middleware
 app.use("/api/v1", blogRoute);
 
