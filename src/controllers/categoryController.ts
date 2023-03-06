@@ -30,3 +30,36 @@ export const getAllCategoryController = async (
     next(err);
   }
 };
+export const updateCategoryController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const category = await CategorySchema.findByIdAndUpdate(
+      req.params.id,
+      { name: req.body.name },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!category) throw new NotFound("Data is not updated");
+    sendStatus(res, 200, category);
+  } catch (err) {
+    next(err);
+  }
+};
+export const deleteCategoryController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const category = await CategorySchema.findByIdAndDelete(req.params.id);
+    if (!category) throw new NotFound("Data is not deleted");
+    sendStatus(res, 200, category);
+  } catch (err) {
+    next(err);
+  }
+};

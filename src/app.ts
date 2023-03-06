@@ -10,15 +10,15 @@ const app: Application = express();
 app.use(express.json());
 
 //routes middleware
-app.use("/api/v1/blog", blogRoute);
+app.use("/api/v1", blogRoute);
 
-app.use("/api/v1/posts", recentPost);
+app.use("/api/v1", recentPost);
 
-app.use("/api/v1/comment", recentComment);
+app.use("/api/v1", recentComment);
 
-app.use("/api/v1/newsletter", newsletter);
+app.use("/api/v1", newsletter);
 
-app.use("/api/v1/categoryname", categoryName);
+app.use("/api/v1", categoryName);
 
 app.use("/api/v1", searchRoute);
 

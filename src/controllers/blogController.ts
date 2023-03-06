@@ -48,9 +48,9 @@ export const postBlog = async (
     const text = { ...req.file };
     const photo = text.filename;
     const file = { ...req.body, photo };
-    // console.log(file);
+
     const blog = await BlogSchema.create(file);
-    //console.log(blog);
+
     sendStatus(res, 201, blog);
   } catch (err) {
     next(err);
@@ -87,18 +87,18 @@ export const updateBlogs = async (
   }
 };
 
-export const updateBlogPhoto = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const blog = await BlogSchema.findByIdAndUpdate(req.params.id, req.file, {
-      new: true,
-    });
+// export const updateBlogPhoto = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const blog = await BlogSchema.findByIdAndUpdate(req.params.id, req.file, {
+//       new: true,
+//     });
 
-    sendStatus(res, 200, blog);
-  } catch (err) {
-    next(err);
-  }
-};
+//     sendStatus(res, 200, blog);
+//   } catch (err) {
+//     next(err);
+//   }
+//};

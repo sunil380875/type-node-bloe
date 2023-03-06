@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import SendResponse from "../utils/response";
 import { NotFound } from "http-errors";
 
