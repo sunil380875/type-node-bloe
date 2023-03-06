@@ -1,13 +1,14 @@
 import express, { Response, Request } from "express";
 const responseWithStatusCode = (
   res: Response,
-  statuscode: number,
-  data: object | any
+
+  data: object | any,
+  message: string
 ) => {
-  res.status(statuscode).json({
+  res.json({
     result: {
       success: {
-        message: "Success",
+        message: message,
         data,
       },
     },

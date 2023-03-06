@@ -11,7 +11,7 @@ export const postCategoryController = async (
     const category = await CategorySchema.create(req.body);
     if (!category) throw new NotFound("Data is not found");
 
-    sendStatus(res, 201, category);
+    sendStatus(res, category, "Successfully created category");
   } catch (err) {
     next(err);
   }
@@ -25,7 +25,7 @@ export const getAllCategoryController = async (
   try {
     const category = await CategorySchema.find();
     if (!category) throw new NotFound("Data is not found");
-    sendStatus(res, 200, category);
+    sendStatus(res, category, "Successfully get all category");
   } catch (err) {
     next(err);
   }
@@ -45,7 +45,7 @@ export const updateCategoryController = async (
       }
     );
     if (!category) throw new NotFound("Data is not updated");
-    sendStatus(res, 200, category);
+    sendStatus(res, category, "Successfully updated the category");
   } catch (err) {
     next(err);
   }
@@ -58,7 +58,7 @@ export const deleteCategoryController = async (
   try {
     const category = await CategorySchema.findByIdAndDelete(req.params.id);
     if (!category) throw new NotFound("Data is not deleted");
-    sendStatus(res, 200, category);
+    sendStatus(res, category, "Successfully deleted the category");
   } catch (err) {
     next(err);
   }

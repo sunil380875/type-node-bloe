@@ -11,7 +11,7 @@ export const getAllComment = async (
   try {
     const comment = await CommentSchema.find();
     if (!comment) throw new NotFound("No comment found");
-    SendResponse(res, 200, comment);
+    SendResponse(res, comment, "Successfully get data");
   } catch (err) {
     next(err);
   }
@@ -25,7 +25,19 @@ export const postComment = async (
   try {
     const comments = await CommentSchema.create(req.body);
     if (!comments) throw new NotFound("No comments found");
-    SendResponse(res, 201, comments);
+    SendResponse(res, comments, "Successfully create a comments");
+  } catch (err) {
+    next(err);
+  }
+};
+export const updateComment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const updateComments = await CommentSchema.findByIdAndDelete(req.params.id);
+    SendResponse(res, updateComments, "Successfully update a Comment");
   } catch (err) {
     next(err);
   }
@@ -38,7 +50,7 @@ export const deleteComment = async (
 ) => {
   try {
     await CommentSchema.findByIdAndDelete(req.params.id);
-    SendResponse(res, 204, "");
+    SendResponse(res, "", "Successfully delete a Comment");
   } catch (err) {
     next(err);
   }

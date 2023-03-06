@@ -19,7 +19,7 @@ export const getAllBlog = async (
     const skips = (page - 1) * limit;
     query = query.skip(skips).limit(limit);
     const blog = await query;
-    sendStatus(res, 200, blog);
+    sendStatus(res, blog, "Successfully get the data");
   } catch (err) {
     next(err);
   }
@@ -33,7 +33,7 @@ export const getaBlog = async (
   try {
     const blog = await BlogSchema.findById(req.params.id);
 
-    sendStatus(res, 200, blog);
+    sendStatus(res, blog, "Successfully get the data");
   } catch (err) {
     next(err);
   }
@@ -51,7 +51,7 @@ export const postBlog = async (
 
     const blog = await BlogSchema.create(file);
 
-    sendStatus(res, 201, blog);
+    sendStatus(res, blog, "Successfully create a blog");
   } catch (err) {
     next(err);
   }
@@ -65,7 +65,7 @@ export const deleteBlog = async (
   try {
     await BlogSchema.findByIdAndDelete(req.params.id);
 
-    sendStatus(res, 204, "");
+    sendStatus(res, " ", "Successfully delete a blog");
   } catch (err) {
     next(err);
   }
@@ -81,24 +81,8 @@ export const updateBlogs = async (
       runValidator: true,
     });
 
-    sendStatus(res, 200, blog);
+    sendStatus(res, blog, "Successfully update a blog");
   } catch (err) {
     next(err);
   }
 };
-
-// export const updateBlogPhoto = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const blog = await BlogSchema.findByIdAndUpdate(req.params.id, req.file, {
-//       new: true,
-//     });
-
-//     sendStatus(res, 200, blog);
-//   } catch (err) {
-//     next(err);
-//   }
-//};
