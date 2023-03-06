@@ -1,11 +1,11 @@
 import { Document } from "mongoose";
 import { Url } from "url";
 
-interface RecentComments extends Document {
+interface RECENT_COMMENTS_TYPE extends Document {
   comments: string;
   name: string;
   email: string;
   websites: string;
 }
 
-export default RecentComments;
+export default RECENT_COMMENTS_TYPE;

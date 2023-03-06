@@ -1,11 +1,11 @@
 import { Document } from "mongoose";
 
-interface RecentPosts extends document {
+interface RECENT_POSTS extends document {
   title: string;
-  auther: string;
+  author: string;
   date: Date;
   photo: string;
   content: string;
 }
 
-export = RecentPosts;
+export default RECENT_POSTS;

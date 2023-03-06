@@ -1,13 +1,17 @@
-import { Request, Response } from "express";
-import { NewsLetterSubscribe } from "../model/subscribenewsletter";
-import sendResponse from "../utils/responce";
+import { NextFunction, Request, Response } from "express";
+import { NewsLetterSubscribeSchema } from "../model";
+import sendResponse from "../utils/response";
 
-export const subscribeNewsLetter = async (req: Request, res: Response) => {
+export const subscribeNewsLetter = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     console.log(req.body);
-    const subscribeLetter = await NewsLetterSubscribe.create(req.body);
+    const subscribeLetter = await NewsLetterSubscribeSchema.create(req.body);
     sendResponse(res, 201, subscribeLetter);
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };

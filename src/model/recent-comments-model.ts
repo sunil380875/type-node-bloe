@@ -1,9 +1,11 @@
 import { Model, model, Schema } from "mongoose";
-import RecentComments from "./../types/recentComments";
+import { RECENT_COMMENTS_TYPE } from "../types";
 import validators from "validator";
-import { url } from "inspector";
 
-const commentSchema = new Schema<RecentComments, Model<RecentComments>>(
+const commentSchema = new Schema<
+  RECENT_COMMENTS_TYPE,
+  Model<RECENT_COMMENTS_TYPE>
+>(
   {
     comments: String,
     name: {
@@ -22,4 +24,8 @@ const commentSchema = new Schema<RecentComments, Model<RecentComments>>(
   }
 );
 
-export const Comment = model("Comment", commentSchema);
+const CommentSchema = model<RECENT_COMMENTS_TYPE, Model<RECENT_COMMENTS_TYPE>>(
+  "Comment",
+  commentSchema
+);
+export default CommentSchema;

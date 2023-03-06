@@ -1,22 +1,29 @@
-import { Request, Response, NextFunction, Errback } from "express";
-import { CategoryName } from "../model/categoryModel";
-import sendStatus from "./../utils/responce";
-
-export const postCategoryName = async (req: Request, res: Response) => {
+import { Request, Response, NextFunction } from "express";
+import { CategorySchema } from "../model";
+import sendStatus from "./../utils/response";
+export const postCategoryController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const category = await CategoryName.create(req.body);
+    const category = await CategorySchema.create(req.body);
 
     sendStatus(res, 201, category);
-  } catch (err: any) {
-    console.log(err.message);
+  } catch (err) {
+    next(err);
   }
 };
 
-export const getAllCategoryname = async (req: Request, res: Response) => {
+export const getAllCategoryController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const category = await CategoryName.find();
+    const category = await CategorySchema.find();
     sendStatus(res, 200, category);
-  } catch (err: any) {
-    console.log(err.message);
+  } catch (err) {
+    next(err);
   }
 };

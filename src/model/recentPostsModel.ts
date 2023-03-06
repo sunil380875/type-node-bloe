@@ -1,20 +1,20 @@
 import { Model, Schema, model } from "mongoose";
-import recentPosts from "../types/recentPost";
+import { RECENT_POSTS_TYPE } from "../types";
 
-const recentPostsSchema = new Schema<recentPosts, Model<recentPosts>>(
+const recentPostsSchema = new Schema<
+  RECENT_POSTS_TYPE,
+  Model<RECENT_POSTS_TYPE>
+>(
   {
     title: {
       type: String,
       required: true,
     },
-    auther: {
+    author: {
       type: String,
       required: true,
     },
-    date: {
-      type: Date,
-      default: Date.now(),
-    },
+
     photo: {
       type: String,
     },
@@ -26,5 +26,9 @@ const recentPostsSchema = new Schema<recentPosts, Model<recentPosts>>(
     timestamps: true,
   }
 );
+const RecentPostSchema = model<RECENT_POSTS_TYPE, Model<RECENT_POSTS_TYPE>>(
+  "RecentPost",
+  recentPostsSchema
+);
 
-export const RecentPost = model("RecentPost", recentPostsSchema);
+export default RecentPostSchema;

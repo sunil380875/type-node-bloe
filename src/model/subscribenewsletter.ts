@@ -1,11 +1,8 @@
 import { Model, model, Schema } from "mongoose";
 import validators from "validator";
-import subscribeNewsLetter from "./../types/subscribenewsletter";
+import { NEWS_LETTER_TYPE } from "../types";
 
-const newsLetterSchema = new Schema<
-  subscribeNewsLetter,
-  Model<subscribeNewsLetter>
->(
+const newsLetterSchema = new Schema<NEWS_LETTER_TYPE, Model<NEWS_LETTER_TYPE>>(
   {
     email: {
       type: String,
@@ -17,7 +14,8 @@ const newsLetterSchema = new Schema<
   }
 );
 
-export const NewsLetterSubscribe = model(
-  "NewsLetterSubscribe",
-  newsLetterSchema
-);
+const NewsLetterSubscribeSchema = model<
+  NEWS_LETTER_TYPE,
+  Model<NEWS_LETTER_TYPE>
+>("NewsLetterSubscribe", newsLetterSchema);
+export default NewsLetterSubscribeSchema;

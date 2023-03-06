@@ -1,30 +1,13 @@
 import { Document, Schema } from "mongoose";
-
-interface CategoryType extends Document {
-  category: [
-    {
-      type: SchemaTypes.ObjectId;
-      ref: "Category";
-    }
-  ];
-  createdBy: {
-    type: String;
-    required: true;
-    default: "Admin";
-  };
-  ceatedAt: {
-    type: Date;
-  };
-  shortDescription: {
-    type: String;
-  };
-  inPhotoTitle: {
-    type: String;
-  };
-  photo: {
-    type: String;
-  };
-  Description: String;
+import CATEGORY_TYPE from "../types";
+interface BLOG_TYPE extends Document {
+  category: CATEGORY_TYPE;
+  createdBy: string;
+  createdAt: Date;
+  shortDescription: string;
+  inPhotoTitle: string;
+  photo: string;
+  Description: string;
 }
 
-export = CategoryType;
+export default BLOG_TYPE;

@@ -1,9 +1,8 @@
-import Blog from "./../model/blogModel";
-import sendResponce from "./../utils/responce";
+import { BlogSchema } from "../model";
 import { Request, Response } from "express";
 
 export const searchApi = async (req: Request, res: Response) => {
-  const searchResult = await Blog.find({
+  const searchResult = await BlogSchema.find({
     $or: [
       { createdBy: { $regex: req.params.key, $options: "i" } },
 

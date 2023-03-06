@@ -1,35 +1,47 @@
-import { RecentPost } from "../model/recentPostsModel";
-import { Request, Response } from "express";
-import sendStatus from "../utils/responce";
+import { RecentPostSchema } from "../model";
+import { NextFunction, Request, Response } from "express";
+import sendStatus from "../utils/response";
 
-export const recentPostContent = async (req: Request, res: Response) => {
+export const recentPostContent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const { title, auther, date, photo, content } = req.body;
-    const posts = await RecentPost.create({
+    const { title, author, date, photo, content } = req.body;
+    const posts = await RecentPostSchema.create({
       title,
-      auther,
+      author,
       date,
       photo,
       content,
     });
     sendStatus(res, 201, posts);
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
-export const getRecentPost = async (req: Request, res: Response) => {
+export const getRecentPost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const recentPost = await RecentPost.find();
+    const recentPost = await RecentPostSchema.find();
 
     sendStatus(res, 200, recentPost);
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
-export const editPost = async (req: Request, res: Response) => {
+export const editPost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const recentPosts = await RecentPost.findByIdAndUpdate(
+    const recentPosts = await RecentPostSchema.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -39,15 +51,19 @@ export const editPost = async (req: Request, res: Response) => {
     );
     sendStatus(res, 200, recentPosts);
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
-export const deletePost = async (req: Request, res: Response) => {
+export const deletePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    await RecentPost.findByIdAndDelete(req.params.id);
+    await RecentPostSchema.findByIdAndDelete(req.params.id);
     sendStatus(res, 204, "");
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };

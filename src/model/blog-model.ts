@@ -1,8 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema } from "mongoose";
 import { Model, model } from "mongoose";
-import BlogType from "../types/blogs";
+import { BLOG_TYPE } from "../types";
 
-const blogSchema = new Schema(
+const blogSchema = new Schema<BLOG_TYPE, Model<BLOG_TYPE>>(
   {
     category: [
       {
@@ -31,6 +31,6 @@ const blogSchema = new Schema(
   }
 );
 
-const Blog = mongoose.model("Blog", blogSchema);
+const BlogSchema = model<BLOG_TYPE, Model<BLOG_TYPE>>("Blog", blogSchema);
 
-export = Blog;
+export default BlogSchema;

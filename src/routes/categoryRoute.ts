@@ -1,10 +1,11 @@
 import express from "express";
 import {
-  postCategoryName,
-  getAllCategoryname,
+  postCategoryController,
+  getAllCategoryController,
 } from "../controllers/categoryController";
 const router = express.Router();
 
-router.post("/", postCategoryName).get("/", getAllCategoryname);
+router.post("/", postCategoryController);
+router.get("/", getAllCategoryController);
 
 export default router;
