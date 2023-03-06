@@ -56,7 +56,12 @@ export const postBlog = async (
         })
       : undefined;
 
-    sendStatus(res, "", "Successfully create a blog");
+    const blog = await BlogSchema.create({
+      ...req.body,
+      photo: avatarRawData?.key,
+      photoPath: avatarRawData?.Location,
+    });
+    sendStatus(res, blog, "Successfully create a blog");
   } catch (err) {
     next(err);
   }

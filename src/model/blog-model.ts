@@ -12,7 +12,7 @@ const blogSchema = new Schema<BLOG_TYPE, Model<BLOG_TYPE>>(
     ],
     createdBy: {
       type: String,
-      required: true,
+
       default: "Admin",
     },
     shortDescription: {
@@ -22,6 +22,9 @@ const blogSchema = new Schema<BLOG_TYPE, Model<BLOG_TYPE>>(
       type: String,
     },
     photo: {
+      type: String,
+    },
+    photoPath: {
       type: String,
     },
     Description: String,

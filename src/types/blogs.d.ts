@@ -7,6 +7,7 @@ interface BLOG_TYPE extends Document {
   shortDescription: string;
   inPhotoTitle: string;
   photo: string;
+  photoPath: string;
   Description: string;
 }
 
