@@ -72,11 +72,30 @@ export const updateBlogs = async (
   next: NextFunction
 ) => {
   try {
-    const blog = await BlogSchema.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidator: true,
-    });
+    const avatarRawData = req?.files?.photo
+      ? ((await new MediaStoreService().upload({
+          file: req?.files?.photo,
+          dir: "User",
+        })) as {
+          key: string;
+          Location: string;
+        })
+      : undefined;
 
+    const blog = await BlogSchema.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...req.body,
+        photo: avatarRawData?.key,
+        photoPath: avatarRawData?.Location,
+      },
+      {
+        runValidator: true,
+      }
+    );
+    if (blog?.photo && blog?.photoPath) {
+      await new MediaStoreService().delete(blog?.photoPath);
+    }
     sendStatus(res, blog, "Successfully update a blog");
   } catch (err) {
     next(err);
@@ -89,7 +108,13 @@ export const deleteBlog = async (
   next: NextFunction
 ) => {
   try {
-    await BlogSchema.findByIdAndDelete(req.params.id);
+    const blog = await BlogSchema.findById(req.params.id);
+    if (blog?.photoPath) {
+      await new MediaStoreService().delete(blog?.photoPath);
+    }
+    const blogDelete = await BlogSchema.findByIdAndDelete(req.params.id).select(
+      "+photoPath"
+    );
 
     sendStatus(res, " ", "Successfully delete a blog");
   } catch (err) {

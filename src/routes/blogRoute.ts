@@ -14,7 +14,7 @@ router.post("/postablog", postBlog);
 
 router.get("getablog/:id", getaBlog);
 
-router.patch("/updateblog/:id", updateBlogs);
+router.put("/updateblog/:id", updateBlogs);
 router.delete("/deleteblog/:id", deleteBlog);
 //router.patch("/updateblogphoto/:id", updateBlogPhoto);
 export = router;

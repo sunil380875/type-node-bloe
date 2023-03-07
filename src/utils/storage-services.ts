@@ -13,7 +13,8 @@ class MediaStoreService {
     file,
     dir,
     folderName,
-  }: {
+  }: // folderName,
+  {
     file: any;
     dir: string;
     folderName?: string;
@@ -34,7 +35,7 @@ class MediaStoreService {
       if (file.mimetype.split("/")[0] === "application")
         delete option["resource_type"];
 
-      const uploadImageData = await v2.uploader.upload(tempFile, option);
+      const uploadImageData = await v2.uploader.upload(tempFile);
       fs.rm(`${tempFile}`, { recursive: true }, () => {});
 
       return {
@@ -42,7 +43,6 @@ class MediaStoreService {
         Location: uploadImageData.public_id,
         allData: uploadImageData,
       };
-      //   }
     } catch (error) {
       new Error();
       return false;
